@@ -1,0 +1,94 @@
+em1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 21.6.255.16  netmask 255.255.255.0  broadcast 21.6.255.255
+        inet6 fe40::d293:67ff:fc02:6475  prefixlen 64  scopeid 0x20<link>
+        ether d0:95:88:02:64:75  txqueuelen 1000  (Ethernet)
+        RX packets 165090171  bytes 46010447567 (42.8 GiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 140667507  bytes 57349124587 (53.4 GiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 18  
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 7985954  bytes 7438908546 (6.9 GiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 7985954  bytes 7438908546 (6.9 GiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+p1p1: flags=4419<UP,BROADCAST,RUNNING,PROMISC,MULTICAST>  mtu 1500
+        inet 21.6.255.17  netmask 255.255.255.0  broadcast 21.6.255.255
+        ether d0:95:88:02:64:76  txqueuelen 1000  (Ethernet)
+        RX packets 466214479  bytes 181373179415 (168.9 GiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 476160395  bytes 228908066619 (213.1 GiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+tap0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.1.128.9  netmask 255.255.248.0  broadcast 10.1.135.255
+        inet6 fe80::58ee:97ff:fe2c:a609  prefixlen 64  scopeid 0x20<link>
+        ether 5a:ee:97:2c:a6:09  txqueuelen 100  (Ethernet)
+        RX packets 2325  bytes 252806 (246.8 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1186  bytes 158662 (154.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+tun0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
+        inet 10.88.66.1  netmask 255.255.255.0  destination 10.88.66.1
+        inet6 fe80::485b:1c11:f99f:a28  prefixlen 64  scopeid 0x20<link>
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 100  (UNSPEC)
+        RX packets 80224  bytes 7873422 (7.5 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 138870  bytes 129138262 (123.1 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+##########################################################################################################################################
+
+1: [36mlo[0m: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state [0mUNKNOWN [0mgroup default qlen 1000
+    link/loopback [33m00:00:00:00:00:00[0m brd [33m00:00:00:00:00:00[0m
+    inet [35m127.0.0.1[0m/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 [34m::1[0m/128 scope host 
+       valid_lft forever preferred_lft forever
+2: [36menp4s0f0[0m: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state [32mUP [0mgroup default qlen 1000
+    link/ether [33m00:18:33:f1:98:3c[0m brd [33mff:ff:ff:ff:ff:ff[0m
+3: [36menp4s0f1[0m: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state [31mDOWN [0mgroup default qlen 1000
+    link/ether [33m00:18:33:f1:98:3d[0m brd [33mff:ff:ff:ff:ff:ff[0m
+4: [36menp5s0f0[0m: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state [32mUP [0mgroup default qlen 1000
+    link/ether [33m00:29:9e:b5:e6:da[0m brd [33mff:ff:ff:ff:ff:ff[0m
+    inet [35m5.22.14.17[0m/29 brd [35m8.24.14.175 [0mscope global noprefixroute enp5s0f0
+       valid_lft forever preferred_lft forever
+    inet6 [34mfe80::5473:d653:a319:3d25[0m/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+5: [36menp5s0f1[0m: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state [32mUP [0mgroup default qlen 1000
+    link/ether [33m00:26:4e:b5:76:db[0m brd [33mff:ff:ff:ff:ff:ff[0m
+27: [36mip_vti0[0m@NONE: <NOARP> mtu 1480 qdisc noop state [31mDOWN [0mgroup default qlen 1000
+    link/ipip [33m0.0.0.0[0m brd [33m0.0.0.0[0m
+38: [36mtunl0[0m@NONE: <NOARP> mtu 1480 qdisc noop state [31mDOWN [0mgroup default qlen 1000
+    link/ipip [33m0.0.0.0[0m brd [33m0.0.0.0[0m
+50: [36mtap0[0m: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state [0mUNKNOWN [0mgroup default qlen 100
+    link/ether [33mea:04:cd:c5:81:fa[0m brd [33mff:ff:ff:ff:ff:ff[0m
+    inet [35m10.1.128.2[0m/21 brd [35m10.1.135.255 [0mscope global tap0
+       valid_lft forever preferred_lft forever
+    inet6 [34mfe80::e804:cdff:fec5:81fa[0m/64 scope link 
+       valid_lft forever preferred_lft forever
+
+##########################################################################################################################################
+
+The regex matches the following IPv6 address forms. Note that these are all the same address:
+
+fe80:0000:0000:0000:0204:61ff:fe9d:f156 // full form of IPv6
+fe80:0:0:0:204:61ff:fe9d:f156 // drop leading zeroes
+fe80::204:61ff:fe9d:f156 // collapse multiple zeroes to :: in the IPv6 address
+fe80:0000:0000:0000:0204:61ff:254.157.241.86 // IPv4 dotted quad at the end
+fe80:0:0:0:0204:61ff:254.157.241.86 // drop leading zeroes, IPv4 dotted quad at the end
+fe80::204:61ff:254.157.241.86 // dotted quad at the end, multiple zeroes collapsed
+
+In addition, the regular expression matches these IPv6 forms:
+
+::1 // localhost
+fe80:: // link-local prefix
+2001:: // global unicast prefix
+
+
