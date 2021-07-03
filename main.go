@@ -81,8 +81,8 @@ func main() {
 						return false
 					}
 					return true
-				}, func(str string) string {
-					return fmt.Sprintf("\033[33m%s\033[0m", str)
+				}, func(str string) (string, int) {
+					return fmt.Sprintf("\033[33m%s\033[0m", str), 0
 				})
 
 				line = ReplaceAllString(regexIPv6, line, func(b byte) bool {
@@ -91,20 +91,21 @@ func main() {
 						return false
 					}
 					return true
-				}, func(str string) string {
-					return fmt.Sprintf("\033[34m%s\033[0m", str)
+				}, func(str string) (string, int) {
+					return fmt.Sprintf("\033[34m%s\033[0m", str), 0
 				})
 			}
 
 			line = ReplaceAllString(regexIPv4, line, func(b byte) bool {
-				if (b >= '0' && b <= '9') || b == '.' {
+				if b >= '0' && b <= '9' {
 					return false
 				}
 				return true
-			}, func(str string) string {
+			}, func(str string) (string, int) {
 				var (
-					info string
-					err  error
+					info    string
+					incrLen int
+					err     error
 				)
 
 				if (translateNoPublic || IsPublicIPv4(str)) &&
@@ -115,6 +116,8 @@ func main() {
 						_, _ = fmt.Fprintln(os.Stderr, "!!!!  "+str, err)
 					} else {
 						info = strings.ReplaceAll(strings.ReplaceAll(info, "(", "["), ")", "]")
+						incrLen = len(info) + 2 // within "()"
+
 						if outputWithColor {
 							info = fmt.Sprintf("\033[0m(\033[90m%s\033[0m)", info)
 						} else {
@@ -127,7 +130,7 @@ func main() {
 					str = fmt.Sprintf("\033[35m%s\033[0m", str)
 				}
 
-				return fmt.Sprintf("%s%s", str, info)
+				return fmt.Sprintf("%s%s", str, info), incrLen
 			})
 
 			fmt.Println(line)
@@ -283,7 +286,7 @@ func IsPublicIPv4(IP string) bool {
 	return IsPublicIPv4Long(IP2long(ip))
 }
 
-func ReplaceAllString(re *regexp.Regexp, src string, borderPass func(b byte) bool, repl func(string) string) string {
+func ReplaceAllString(re *regexp.Regexp, src string, borderPass func(b byte) bool, repl func(string) (string, int)) string {
 	loc := re.FindAllStringIndex(src, -1)
 	if loc == nil {
 		return src
@@ -302,8 +305,16 @@ func ReplaceAllString(re *regexp.Regexp, src string, borderPass func(b byte) boo
 		}
 
 		buf += src[last:v[0]]
-		buf += repl(src[v[0]:v[1]])
+		matchRepl, incrLen := repl(src[v[0]:v[1]])
+		buf += matchRepl
+
 		last = v[1]
+		for i := v[1]; i < v[1]+incrLen; i++ {
+			if i >= len(src) || src[i] != ' ' || src[i+1] != ' ' {
+				break
+			}
+			last = i
+		}
 	}
 
 	if last != len(src) {
