@@ -45,7 +45,7 @@ $ go get -u -v github.com/leolovenet/ipqqwry
 ### 直接查询 IP、域名、URL 中 HostName 的归属地信息
 
 ```
-$ ipqqwry ipqqwry 1.1.1.1 2.2.2.2 weibo.com https://google.com/ncr
+$ ipqqwry 1.1.1.1 2.2.2.2 weibo.com https://google.com/ncr
 [
   {
     "ip     ": "1.1.1.1",
