@@ -32,7 +32,7 @@
 ipqqwry 需要预先安装 Go. 安装后可以从源码安装软件:
 
 ```sh
-$ go get -u -v github.com/leolovenet/ipqqwry
+go install github.com/leolovenet/ipqqwry@latest
 ```
 
 ### 下载预编译的可执行程序
