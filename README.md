@@ -105,8 +105,8 @@ $ ifconfig | ipqqwry
 #或者
 $ ip addr show  | ipqqwry
 
-#或者
-$ tcpdump -nni any icmp | ipqqwry
+#或者 (注意添加 -l 选项)
+$ tcpdump -lnni any icmp | ipqqwry
 
 ```
 
