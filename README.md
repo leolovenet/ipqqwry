@@ -18,9 +18,10 @@
 - 单一可执行文件（纯真库已经编译进可执行文件内，也可通过环境变量`IPDB_QQWRY_PATH`指定使用外部纯正库）
 - 纯真 IPv4 离线数据库
 - 支持域名、URL 、IPv4 的直接查询
-- 支持管道处理（管道模式下，支持IPv4、IPv6、MAC 地址字符的颜色高亮） 
+- 支持管道处理（管道模式与输入重定向模式下，支持IPv4、IPv6、MAC 地址字符，端口，网卡名等信息的颜色高亮）
 - 查询完全离线
 - 全平台支持（go语言的功劳）
+- 支持 hosts 文件中的自定义信息显示
 
 ![pipeline with tcpdump command](./images/with-tcpdump.jpg)
 
@@ -119,7 +120,7 @@ $ tcpdump -nni any icmp | ipqqwry
 
 ```shell
 export IPDB_QQWRY_PATH=/some/other/qqwry.dat
-    
+
 ipqqwry -v
 ```
 
@@ -127,22 +128,26 @@ ipqqwry -v
 
 ## 查看帮助
 
-直接运行 ipqqwry 命令
+直接运行 ipqqwry 命令，或者 ipqqwry --help
 
 ```shell
-$ ipqqwry
-Usage: 
+$ ipqqwry --help
+Usage:
   ipqqwry [ip | domain] ...
-  ifconfig | ipqqwry [-p | -C]    Using pipeline, translate the included ip address information.
-                                  The -p option also translates(default not) non-public IP information.
-                                  The -C option suppress color output.
-  ipqqwry [-v | version]          show qqwry version.
+  ifconfig | ipqqwry [-p | -C]             Using pipeline, translate the included MAC/IPv4/IPv6 address information.
+                                           The -p option also translates(default not) non-public IPv4 information.
+                                           The -C option suppress color output.
+  ipqqwry < file                           Using Input redirection, translate the included MAC/IPv4/IPv6 address information.
+  ipqqwry [-v | --version | version]       show qqwry version.
+  ipqqwry [-h | --help | help]             show this help.
 ```
 
 
 ## 测试效果
 ```shell
 cat test.log | ipqqwry
+#或
+ipqqwry < test.log
 ```
 
 ## 感谢列表
