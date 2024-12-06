@@ -198,7 +198,7 @@ func main() {
 									if outputWithColor {
 										info2 = fmt.Sprintf("%s%s%s", ColorYellow, info2, ColorReset)
 									}
-									info = fmt.Sprintf("%s|%s", info, info2)
+									info = fmt.Sprintf("%s%s|%s", info, ColorReset, info2)
 								}
 								info = strings.ReplaceAll(strings.ReplaceAll(info, "(", "["), ")", "]")
 
