@@ -183,7 +183,10 @@ func main() {
 							tailLen = idx[idxLen-3] - idx[idxLen-4]
 							tailSub = line[idx[idxLen-2]:idx[idxLen-1]]                // step chart
 							tailStr = line[idx[idxLen-4]+len(tailSub) : idx[idxLen-3]] // skip "step" chart
-							tailStr = fmt.Sprintf("%s%s%s%s", tailSub, ColorCyan, tailStr, ColorReset)
+							if outputWithColor {
+								tailStr = fmt.Sprintf("%s%s%s", ColorCyan, tailStr, ColorReset)
+							}
+							tailStr = fmt.Sprintf("%s%s", tailSub, tailStr)
 						}
 
 						ipStr := line[idx[0] : idx[1]-tailLen]
