@@ -60,6 +60,7 @@ func main() {
 			fmt.Println("qqwry: " + ipdb.Version())
 			fmt.Println("Version: " + Version)
 			fmt.Println("BuildTime: " + BuildTime)
+			fmt.Println("Runtime: " + runtime.GOOS + "/" + runtime.GOARCH)
 			os.Exit(0)
 		}
 		if strings.HasPrefix(os.Args[i], "-h") || os.Args[i] == "--help" || os.Args[i] == "help" {
@@ -241,6 +242,9 @@ func main() {
 	var outputData []Info
 	for i := 1; i < len(os.Args); i++ {
 		input := os.Args[i]
+		if strings.HasPrefix(input, "-") {
+			continue
+		}
 		ip := net.ParseIP(input).To4()
 		if ip != nil {
 			base, ext, err := ipdb.QueryIP(ip)
