@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/leolovenet/ipqqwry/qqwry"
 )
@@ -270,6 +272,32 @@ func main() {
 			}
 
 			ips, err := net.LookupIP(input)
+			if err != nil {
+				dnsServer := strings.TrimSpace(os.Getenv("IPQQWRY_DNS"))
+				if dnsServer == "" {
+					dnsServer = "8.8.8.8:53"
+				} else if _, _, err := net.SplitHostPort(dnsServer); err != nil {
+					dnsServer = net.JoinHostPort(dnsServer, "53")
+				}
+				if dnsServer != "" {
+					target := dnsServer
+					if !strings.Contains(target, ":") {
+						target = net.JoinHostPort(target, "53")
+					}
+					fmt.Fprintf(os.Stderr, "default DNS lookup failed for %s, try DNS server %s, you can set environment variable IPQQWRY_DNS to change it.\n", input, dnsServer)
+
+					resolver := &net.Resolver{
+						PreferGo: true,
+						Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
+							d := net.Dialer{}
+							return d.DialContext(ctx, network, target)
+						},
+					}
+					ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+					ips, err = resolver.LookupIP(ctx, "ip", input)
+					cancel()
+				}
+			}
 			if err != nil {
 				fmt.Printf("Error looking up IP: %s, Error: %s, Skip it.\n", input, err)
 				continue
